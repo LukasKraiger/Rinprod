@@ -4,6 +4,7 @@ USER root
 
 RUN dnf update -y \
     && dnf -y upgrade \
+    && dnf config-manager --enable ol9_codeready_builder** \
     && dnf -y install epel-release \
     && dnf -y install cmake \
     && dnf -y config-manager --set-enabled crb \
