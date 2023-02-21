@@ -4,7 +4,7 @@ USER root
 
 RUN dnf update -y \
     && dnf -y upgrade \
-    && dnf -y install git wget passwd cmake \
+    && dnf -y install git wget passwd cmake dnf-plugins-core which \
     && dnf builddep R -y
 
 RUN curl -O https://cran.r-project.org/src/base/R-4/R-4.2.2.tar.gz \
