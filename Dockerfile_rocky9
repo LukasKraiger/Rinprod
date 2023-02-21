@@ -8,7 +8,22 @@ RUN dnf update -y \
     && dnf -y install cmake \
     && dnf -y config-manager --set-enabled crb \
     && dnf -y install git wget passwd \
-    && dnf -y install R  
+    && dnf builddep R -y 
+    
+RUN curl -O https://cran.r-project.org/src/base/R-4/R-4.2.2.tar.gz \
+&& tar -xzvf R-4.2.2.tar.gz \
+&& cd R-4.2.2 \ 
+&& ./configure --prefix=/opt/R/R-4.2.2 --enable-R-shlib --enable-memory-profiling
+
+RUN cd R-4.2.2 \
+    && make \
+    && make install \
+    && ls 
+RUN ln -s /opt/R/R-4.2.2/bin/R /usr/local/bin/R \
+    && ln -s /opt/R/R-4.2.2/bin/Rscript /usr/local/bin/Rscript
+
+
+
 
 RUN dnf update -y \
     && dnf -y install harfbuzz-devel fribidi-devel openssl-devel libuuid libuuid-devel libcurl-devel \

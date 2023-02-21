@@ -3,21 +3,31 @@ FROM ubuntu:devel
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update \
 && apt-get upgrade -y \
-&& apt-get install -y gnupg2 wget cmake \
+&& apt-get install -y gnupg2 wget cmake curl \
 && apt-get install -y software-properties-common dirmngr \
-&& wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | gpg --dearmor -o /usr/share/keyrings/r-project.gpg \
-&& echo "deb [signed-by=/usr/share/keyrings/r-project.gpg] https://cloud.r-project.org/bin/linux/ubuntu jammy-cran40/" | tee -a /etc/apt/sources.list.d/r-project.list \
-&& apt-get update \
-&& apt-get install r-base -y \
 && apt-get clean all && \
 apt-get purge && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+RUN sed -i.bak "/^#.*deb-src.*universe$/s/^# //g" /etc/apt/sources.list \
+&& apt-get update \
+&& apt-get build-dep r-base -y
+
+RUN curl -O https://cran.rstudio.com/src/base/R-4/R-4.2.2.tar.gz \
+&& tar -xzvf R-4.2.2.tar.gz \
+&& cd R-4.2.2 \
+&& ./configure --prefix=/opt/R/R-4.2.2 --enable-R-shlib --enable-memory-profiling --with-blas --with-lapack 
+
+RUN cd R-4.2.2 \
+    && make \
+    && make install 
+RUN ln -s /opt/R/R-4.2.2/bin/R /usr/local/bin/R \
+    && ln -s /opt/R/R-4.2.2/bin/Rscript /usr/local/bin/Rscript
+    
+
 RUN apt-get update \
 && apt-get upgrade -y \
 && apt-get install -y git \
-&& apt-get install -y libreoffice \
-&& apt-get install -y texlive-full texlive-xetex \
 && echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections \
 && apt-get install -y ttf-mscorefonts-installer \
 && apt-get clean all && \
