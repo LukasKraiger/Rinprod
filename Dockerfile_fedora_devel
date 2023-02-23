@@ -57,3 +57,8 @@ RUN R -e "if (!library(car, logical.return=T)) quit(status=10)"
 RUN R -e "if (!library(ggpubr, logical.return=T)) quit(status=10)"
  
 RUN R -e "devtools::install_github('LukasKraiger/frame')"
+
+## create directories
+RUN mkdir -p /01_data
+RUN mkdir -p /02_code
+RUN mkdir -p /03_output
