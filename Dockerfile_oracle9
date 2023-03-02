@@ -63,7 +63,19 @@ RUN R -e "if (!library(ggpubr, logical.return=T)) quit(status=10)"
  
 RUN R -e "devtools::install_github('LukasKraiger/frame')"
 
+RUN R -e "devtools::install_github('LukasKraiger/R_Renderengine/rendengine')"
+
+
+
 ## create directories
 RUN mkdir -p /01_data
 RUN mkdir -p /02_code
 RUN mkdir -p /03_output
+ 
+
+RUN cd /02_code
+
+RUN R -e "rendengine::Renderengine(".", 6)"
+
+#ENTRYPOINT usr/lib/rstudio-server/bin/rserver --www-port=8888  --server-daemonize=0 && /bin/bash 
+#https://forums.docker.com/t/how-to-run-bash-command-after-startup/21631 
