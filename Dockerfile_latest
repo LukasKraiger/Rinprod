@@ -61,7 +61,21 @@ RUN R -e "if (!library(apa, logical.return=T)) install.packages('apa', dependenc
 RUN R -e "if (!library(jtools, logical.return=T)) install.packages('jtools', dependencies=TRUE, repos='https://cran.wu.ac.at/')"
 RUN R -e "if (!library(car, logical.return=T)) install.packages('car', dependencies=TRUE, repos='https://cran.wu.ac.at/')"
 RUN R -e "if (!library(ggpubr, logical.return=T)) install.packages('ggpubr', dependencies=TRUE, repos='https://cran.wu.ac.at/')"
- 
+
+RUN R -e "if (!library(xlsx, logical.return=T)) install.packages('xlsx', dependencies=TRUE, repos='https://cran.wu.ac.at/')"
+RUN R -e "if (!library(rstatix, logical.return=T)) install.packages('rstatix', dependencies=TRUE, repos='https://cran.wu.ac.at/')"
+RUN R -e "if (!library(reshape, logical.return=T)) install.packages('reshape', dependencies=TRUE, repos='https://cran.wu.ac.at/')"
+RUN R -e "if (!library(plyr, logical.return=T)) install.packages('plyr', dependencies=TRUE, repos='https://cran.wu.ac.at/')"
+RUN R -e "if (!library(datarium, logical.return=T)) install.packages('datarium', dependencies=TRUE, repos='https://cran.wu.ac.at/')"
+
+
+RUN R -e "if (!library(xlsx, logical.return=T)) quit(status=10)"
+RUN R -e "if (!library(rstatix, logical.return=T)) quit(status=10)"
+RUN R -e "if (!library(reshape, logical.return=T)) quit(status=10)"
+RUN R -e "if (!library(plyr, logical.return=T)) quit(status=10)"
+RUN R -e "if (!library(datarium, logical.return=T)) quit(status=10)"
+
+
 RUN R -e "if (!library(devtools, logical.return=T)) quit(status=10)"
 RUN R -e "if (!library(tidyverse, logical.return=T)) quit(status=10)"
 RUN R -e "if (!library(sjlabelled, logical.return=T)) quit(status=10)"

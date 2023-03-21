@@ -13,16 +13,16 @@ RUN sed -i.bak "/^#.*deb-src.*universe$/s/^# //g" /etc/apt/sources.list \
 && apt-get update \
 && apt-get build-dep r-base -y
 
-RUN curl -O https://cran.rstudio.com/src/base/R-4/R-4.2.2.tar.gz \
-&& tar -xzvf R-4.2.2.tar.gz \
-&& cd R-4.2.2 \
-&& ./configure --prefix=/opt/R/R-4.2.2 --enable-R-shlib --enable-memory-profiling --with-blas --with-lapack 
+RUN curl -O https://cran.rstudio.com/src/base/R-4/R-4.2.3.tar.gz \
+&& tar -xzvf R-4.2.3.tar.gz \
+&& cd R-4.2.3 \
+&& ./configure --prefix=/opt/R/R-4.2.3 --enable-R-shlib --enable-memory-profiling --with-blas --with-lapack 
 
-RUN cd R-4.2.2 \
+RUN cd R-4.2.3 \
     && make \
     && make install 
-RUN ln -s /opt/R/R-4.2.2/bin/R /usr/local/bin/R \
-    && ln -s /opt/R/R-4.2.2/bin/Rscript /usr/local/bin/Rscript
+RUN ln -s /opt/R/R-4.2.3/bin/R /usr/local/bin/R \
+    && ln -s /opt/R/R-4.2.3/bin/Rscript /usr/local/bin/Rscript
     
 
 RUN apt-get update \
